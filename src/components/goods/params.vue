@@ -126,7 +126,7 @@
       :title="'修改'+titleText"
       :visible.sync="editDialogVisible"
       width="50%" @close="editDialogClosed">
-<!--      添加参数对话框-->
+<!--      修改参数对话框-->
       <el-form ref="editFormRef" :model="editForm" :rules="editFormRules" label-width="100px">
         <el-form-item :label="titleText" prop="attr_name">
           <el-input v-model="editForm.attr_name"></el-input>
