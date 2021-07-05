@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import './plugins/element.js'
+// import './plugins/element.js'
 //导入全局样式
 import './assets/css/global.css'
 //导入字体图标
@@ -11,18 +11,28 @@ import TreeTable from 'vue-table-with-tree-grid'
 //导入富文本编辑器
 import VueQuillEditor from 'vue-quill-editor'
 //require styles导入富文本编辑器对应样式
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
+// import 'quill/dist/quill.core.css'
+// import 'quill/dist/quill.snow.css'
+// import 'quill/dist/quill.bubble.css'
+//导入Nprogress 的js和css
+import Nprogress from 'nprogress'
+// import 'nprogress/nprogress.css'
 
 
 
 import axios from "axios";
 //配置请求路径
 axios.defaults.baseURL='https://www.liulongbin.top:8888/api/private/v1/'
+//在request拦截器中，展示进度条
 axios.interceptors.request.use(config =>{
   // console.log(config)
+  Nprogress.start()
   config.headers.Authorization = window.sessionStorage.getItem('token')
+  return config
+})
+//在response拦截器中，隐藏进度条
+axios.interceptors.response.use(config =>{
+  Nprogress.done()
   return config
 })
 Vue.prototype.$http = axios
@@ -34,7 +44,7 @@ Vue.component('tree-table',TreeTable)
 Vue.use(VueQuillEditor)
 
 Vue.filter('dateFormat',function (originVal) {
-   const dt = new Date(originVal)
+  const dt = new Date(originVal)
   const y = dt.getFullYear()
   const m = (dt.getMonth()+1+'').padStart(2,'0')
   const d = (dt.getDate()+'').padStart(2,'0')
